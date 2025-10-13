@@ -1,0 +1,15 @@
+//| mill-version: 1.0.6-jvm
+//| mill-jvm-version: temurin:11
+package build
+import mill.*, javalib.*
+
+object foo extends JavaModule {
+
+  def mvnDeps = Seq(
+    mvn"org.apache.bcel:bcel:6.10.0",
+    mvn"org.apache.commons:commons-lang3:3.19.0"
+  )
+
+  object test extends JavaTests, TestModule.Junit5
+
+}
