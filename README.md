@@ -87,9 +87,9 @@ cd mill
 The error is that class "G" is not found by the modified programm.
 
 
-UPDATE:
+##  sbt
 
-It must be a difference how zinc is generating the java byte code.
+# UPDATE: It must be a difference how zinc is generating the java byte code.
 
 A test with sbt fails as well:
 
