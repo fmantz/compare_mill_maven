@@ -47,7 +47,7 @@ FIND G>LG;
 [INFO] ------------------------------------------------------------------------
 ```
 
-There is not error!
+There is no error!
 
 
 ## mill
@@ -85,3 +85,32 @@ cd mill
 ```
 
 The error is that class "G" is not found by the modified programm.
+
+
+UPDATE:
+
+It must be a difference how zinc is generating the java byte code.
+
+A test with sbt fails as well:
+
+```
+cd sbt
+./sbt clean test
+[info] Fetched artifacts of sbt-build
+[info] compiling 1 Scala source to /home/florian/git/compare_mill_maven/sbt/project/target/scala-2.12/sbt-1.0/classes ...
+[info] loading settings for project root from build.sbt...
+[info] set current project to bcel-test (in build file:/home/florian/git/compare_mill_maven/sbt/)
+[success] Total time: 0 s, completed Oct 14, 2025, 1:01:56 PM
+[info] compiling 1 Java source to /home/florian/git/compare_mill_maven/sbt/target/scala-2.13/classes ...
+[info] compiling 10 Java sources to /home/florian/git/compare_mill_maven/sbt/target/scala-2.13/test-classes ...
+[info] Test run started (JUnit Jupiter)
+[info] Test [33mTransitiveHullTest#getHull() started
+[error] Test TransitiveHullTest.getHull failed: org.opentest4j.AssertionFailedError: expected: <[A, MyEnum, B, C, D, E, F, H, A$Inner]> but was: <[A, MyEnum, B, C, D, E, F, G, H, A$Inner]>, took 0.135s
+[error]     at TransitiveHullTest.getHull(TransitiveHullTest.java:8)
+[info] Test run finished: 1 failed, 0 ignored, 1 total, 0.219s
+[error] Failed: Total 1, Failed 1, Errors 0, Passed 0
+[error] Failed tests:
+[error] 	TransitiveHullTest
+[error] (Test / test) sbt.TestsFailedException: Tests unsuccessful
+[error] Total time: 3 s, completed Oct 14, 2025, 1:01:59 PM
+```
