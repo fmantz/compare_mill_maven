@@ -108,7 +108,7 @@ public class TransitiveHull extends EmptyVisitor {
                     LocalVariable[] lv = lvt.getLocalVariableTable();
                     for (LocalVariable l : lv) {
                         final String localSignature = l.getSignature();
-                        System.out.println("FIND G>" + localSignature);
+                        System.out.println("FIND G>" + Type.getType(localSignature));
                         checkType(Type.getType(localSignature));
                     }
                 }
