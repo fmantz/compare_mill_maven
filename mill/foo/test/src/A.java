@@ -16,6 +16,6 @@ public class A extends B {
     }
     int calc() {
         H h = new H();
-        return h.t();
+        return h.t() + new Inner().calc();
     }
 }
