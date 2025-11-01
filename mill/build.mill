@@ -12,4 +12,5 @@ object foo extends JavaModule {
 
   object test extends JavaTests, TestModule.Junit5
 
+  def javacOptions = Seq("-g")
 }
