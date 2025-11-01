@@ -17,23 +17,23 @@ mvn clean test
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running TransitiveHullTest
-FIND G>LC;
-FIND G>Ljava/lang/String;
-FIND G>LMyEnum;
-FIND G>LF;
-FIND G>LB;
-FIND G>LH;
-FIND G>LH;
-FIND G>LE;
-FIND G>LA$Inner;
-FIND G>LA;
-FIND G>LD;
-FIND G>LA$Inner;
-FIND G>LA$Inner;
-FIND G>LG;
-FIND G>LG;
-FIND G>LG;
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.187 s -- in TransitiveHullTest
+FIND G>C
+FIND G>java.lang.String
+FIND G>MyEnum
+FIND G>F
+FIND G>B
+FIND G>H
+FIND G>H
+FIND G>E
+FIND G>A$Inner
+FIND G>A
+FIND G>D
+FIND G>A$Inner
+FIND G>A$Inner
+FIND G>G
+FIND G>G
+FIND G>G
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.161 s -- in TransitiveHullTest
 [INFO] 
 [INFO] Results:
 [INFO] 
@@ -42,13 +42,12 @@ FIND G>LG;
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  4.618 s
-[INFO] Finished at: 2025-10-13T19:36:53+02:00
+[INFO] Total time:  2.741 s
+[INFO] Finished at: 2025-11-01T19:11:24+01:00
 [INFO] ------------------------------------------------------------------------
 ```
 
 There is no error!
-
 
 ## mill
 
@@ -114,3 +113,49 @@ cd sbt
 [error] (Test / test) sbt.TestsFailedException: Tests unsuccessful
 [error] Total time: 3 s, completed Oct 14, 2025, 1:01:59 PM
 ```
+
+# UPDATE: I found the problem, there are simply other default compiler flags set in maven, sbt and mill:
+
+There are no bugs :-)... mill and sbt simply does not use the compiler flag "-g" by default but maven does. 
+Adding the compiler flag with:  
+
+```
+javacOptions +="-g"
+```
+
+in the build.sbt solves the issue, and my test runs with no error:
+
+```
+sbt clean test
+[info] welcome to sbt 1.11.7 (Eclipse Adoptium Java 21.0.8)
+[info] loading settings for project sbt-build from plugins.sbt...
+[info] loading project definition from /home/florian/git/compare_mill_maven/sbt/project
+[info] loading settings for project root from build.sbt...
+[info] set current project to bcel-test (in build file:/home/florian/git/compare_mill_maven/sbt/)
+[success] Total time: 0 s, completed Nov 1, 2025, 7:00:17 PM
+[info] compiling 1 Java source to /home/florian/git/compare_mill_maven/sbt/target/scala-2.13/classes ...
+[info] compiling 10 Java sources to /home/florian/git/compare_mill_maven/sbt/target/scala-2.13/test-classes ...
+[info] Test run started (JUnit Jupiter)
+[info] Test [33mTransitiveHullTest#getHull() started
+[info] FIND G>C
+[info] FIND G>java.lang.String
+[info] FIND G>MyEnum
+[info] FIND G>F
+[info] FIND G>B
+[info] FIND G>H
+[info] FIND G>H
+[info] FIND G>E
+[info] FIND G>A$Inner
+[info] FIND G>A
+[info] FIND G>D
+[info] FIND G>A$Inner
+[info] FIND G>A$Inner
+[info] FIND G>G
+[info] FIND G>G
+[info] FIND G>G
+[info] Test run finished: 0 failed, 0 ignored, 1 total, 0.217s
+[info] Passed: Total 1, Failed 0, Errors 0, Passed 1
+[success] Total time: 4 s, completed Nov 1, 2025, 7:00:21 PM
+```
+
+### Without the compiler flags the Java compiler does not generate the "LocalVariableTable" [(see here)](https://docs.oracle.com/en/java/javacard/3.1/guide/setting-java-compiler-options.html]).
