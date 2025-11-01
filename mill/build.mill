@@ -1,5 +1,5 @@
 //| mill-version: 1.0.6-jvm
-//| mill-jvm-version: temurin:11
+//| mill-jvm-version: temurin:21
 package build
 import mill.*, javalib.*
 

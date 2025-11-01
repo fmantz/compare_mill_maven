@@ -1,6 +1,6 @@
 ### Is there a bug in mill or do I miss something?
 
-I took an example application of [Apache Commons BCEL](https://commons.apache.org/proper/commons-bcel/) and modified it a bit. I compiled and run the Java code with Temurin 11 (also tried other). Strangely, my mill build and my maven build return different runtime results.
+I took an example application of [Apache Commons BCEL](https://commons.apache.org/proper/commons-bcel/) and modified it a bit. I compiled and run the Java code with Temurin 21 (also tried other). Strangely, my mill build and my maven build return different runtime results.
 I did the same tests on my Mac and got the same strange result.
 
 "
